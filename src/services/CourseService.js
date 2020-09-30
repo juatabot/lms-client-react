@@ -1,6 +1,6 @@
 const url = 'https://wbdv-generic-server.herokuapp.com/api/juat/courses';
 
-const courseService = {
+export const CourseService = {
     findAllCourses: () =>
         fetch(url)
             .then(response => response.json()),
