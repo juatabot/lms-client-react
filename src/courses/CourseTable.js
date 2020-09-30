@@ -12,7 +12,7 @@ class CourseTable extends React.Component {
                     <tr>
                         <th>Title</th>
                         <th>Owner</th>
-                        <th>Last Modified</th>
+                        <th class="d-none d-lg-block">Last Modified</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -33,14 +33,14 @@ class CourseRow extends React.Component {
 
     render() {
         return (
-            < tr >
+            <tr>
                 <td>
-                {this.props.course.name}
+                    {this.props.course.name}
                 </td>
                 <td>
                     {this.props.course._nuid}
                 </td>
-                <td>
+                <td class="d-none d-lg-block">
                     {this.props.course._updatedAt}
                 </td>
             </tr >
