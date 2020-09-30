@@ -6,8 +6,13 @@ import './CourseTable.css';
 class CourseTable extends React.Component {
     constructor(props) {
         super(props);
+        this.deleteCourse = this.deleteCourse.bind(this);
     }
-    
+
+    deleteCourse(courseId) {
+        this.props.deleteCourse(courseId);
+    }
+
     render() {
         return (
             <table className="table">
@@ -21,9 +26,7 @@ class CourseTable extends React.Component {
                 </thead>
                 <tbody>
                     {this.props.courses.map((course) =>
-                        // <CourseRow course={course} key={course._id} />
-
-                        <tr>
+                        <tr key={course._id}>
                             <td class="font-weight-bold">
                                 {course.name}
                             </td>
@@ -35,7 +38,9 @@ class CourseTable extends React.Component {
                             </td>
                             <td>
                                 <FontAwesomeIcon class="fa-fw" icon={faEdit} />
-                                <FontAwesomeIcon class="fa-fw" icon={faTrash} />
+                                <div>
+                                    <FontAwesomeIcon class="fa-fw" icon={faTrash} onClick={() => this.deleteCourse(course._id)} />
+                                </div>
                             </td>
                         </tr >
                     )}
