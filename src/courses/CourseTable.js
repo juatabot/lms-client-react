@@ -1,4 +1,7 @@
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import './CourseTable.css';
 
 class CourseTable extends React.Component {
     constructor(props) {
@@ -34,14 +37,18 @@ class CourseRow extends React.Component {
     render() {
         return (
             <tr>
-                <td>
+                <td class="font-weight-bold">
                     {this.props.course.name}
                 </td>
                 <td>
                     {this.props.course._nuid}
                 </td>
-                <td class="d-none d-lg-block">
+                <td class="d-none d-lg-block text-muted">
                     {this.props.course._updatedAt}
+                </td>
+                <td>
+                    <FontAwesomeIcon class="fa-fw" icon={faEdit} />
+                    <FontAwesomeIcon class="fa-fw" icon={faTrash} />
                 </td>
             </tr >
         );

@@ -17,10 +17,10 @@ class CourseGrid extends React.Component {
 class CourseCard extends React.Component {
     render() {
         return (
-            <div class="col-sm-4">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                 <div class="card-body ">
-                    <div class="card-title">{this.props.course.name}</div>
-                    <div class="card-text">{this.props.course._id}</div>
+                    <div class="card-title font-weight-bold">{this.props.course.name}</div>
+                    <div class="card-subtitle mb-2 text-muted">{this.props.course._nuid}</div>
                     <div class="card-text">
                         <small class="text-muted">
                             {this.props.course._updatedAt}
