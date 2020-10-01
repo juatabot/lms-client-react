@@ -54,7 +54,7 @@ class CourseView extends React.Component {
             const newCourse = { "name": this.state.newCourseName };
             CourseService.createCourse(newCourse)
                 .then(() => {
-                    this.setState({"newCourseName": "" });
+                    this.setState({ "newCourseName": "" });
                     this.refreshCourses();
                 });
         }

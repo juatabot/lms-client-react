@@ -1,4 +1,5 @@
-.fa-inline {
+.fa-fw {
     margin-right: 10%;
     display: inline;
+    float: right;
 }
