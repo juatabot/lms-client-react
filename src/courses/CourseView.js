@@ -62,20 +62,20 @@ class CourseView extends React.Component {
 
     render() {
         return (
-            <div class="container">
-                <h1 class="container-title">
+            <div className="container">
+                <h1 className="container-title">
                     Course Manager
                     </h1>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary" type="button"><FontAwesomeIcon icon={faBars} /></button>
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <button className="btn btn-outline-secondary" type="button"><FontAwesomeIcon icon={faBars} /></button>
                     </div>
-                    <input type="text" class="form-control" placeholder="Add a new course..." value={this.state.newCourseName} onChange={this.handleInputchange} />
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" onClick={this.addCourse} type="button"><FontAwesomeIcon icon={faPlusCircle} /></button>
+                    <input type="text" className="form-control" placeholder="Add a new course..." value={this.state.newCourseName} onChange={this.handleInputchange} />
+                    <div className="input-group-append">
+                        <button className="btn btn-outline-secondary" onClick={this.addCourse} type="button"><FontAwesomeIcon icon={faPlusCircle} /></button>
                     </div>
                     <div>
-                        <button onClick={this.toggleView} data-toggle="buttons" class="btn btn-outline-secondary" type="button"><FontAwesomeIcon icon={faThLarge} /></button>
+                        <button onClick={this.toggleView} data-toggle="buttons" className="btn btn-outline-secondary" type="button"><FontAwesomeIcon icon={faThLarge} /></button>
                     </div>
                 </div>
                 { this.state.tableActive && <CourseTable deleteCourse={this.deleteCourse} courses={this.state.courses} />}
