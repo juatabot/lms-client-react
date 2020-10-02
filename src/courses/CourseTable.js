@@ -1,4 +1,4 @@
-import { faTrash, faEdit, faThList } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faThList, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './CourseTable.css';
@@ -9,7 +9,7 @@ class CourseTable extends React.Component {
         this.deleteCourse = this.deleteCourse.bind(this);
         this.selectRow = this.selectRow.bind(this);
         this.deselectRow = this.deselectRow.bind(this);
-        this.editRow = this.editRow.bind(this);
+        this.updateCourse = this.updateCourse.bind(this);
         this.state = {
             "selectedRows": [],
         }
@@ -21,24 +21,22 @@ class CourseTable extends React.Component {
         });
     }
 
-    selectRow(row) {
-        this.setState({
-            selectedRows: [...this.state.selectedRows, row]
-        })
+    updateCourse(courseId, newName) {
+        this.props.updateCourse(courseId, newName);
     }
+
+    selectRow(row) {
+        this.setState((oldState) => ({
+            selectedRows: [...oldState.selectedRows, row]
+        }))
+    };
+
 
     deselectRow(rowId) {
         this.setState({
             selectedRows: this.state.selectedRows.filter((row) => {
                 return row !== rowId;
             })
-        });
-    }
-
-    editRow() {
-        // render with editing=true if selected
-        this.state.selectedRows.forEach(rowId => {
-            console.log(rowId);
         });
     }
 
@@ -51,26 +49,14 @@ class CourseTable extends React.Component {
                         <th>Owner</th>
                         <th className="d-none d-lg-block">Last Modified</th>
                         <th>
-                            <FontAwesomeIcon className="fa-fw" icon={faEdit} onClick={() => this.editRow()} />
                             <FontAwesomeIcon className="fa-fw" icon={faTrash} onClick={() => this.deleteCourse()} />
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     {this.props.courses.map(course => (
-                        // <CourseRow key={course._id} course={course} deleteCourse={this.deleteCourse} selectRow={this.selectRow} deselectRow={this.deselectRow} editing={true} />
-
-
-                        // render as editing=true if the courseid is inside the selected part???
-                        <CourseRow key={course._id}
-                            course={course}
-                            deleteCourse={this.deleteCourse}
-                            selectRow={this.selectRow}
-                            deselectRow={this.deselectRow}
-                            editing={true && this.state.selectedRows.includes(course._id)} />
-
+                        <CourseRow key={course._id} course={course} updateCourse={this.updateCourse} deleteCourse={this.deleteCourse} selectRow={this.selectRow} deselectRow={this.deselectRow} />
                     ))}
-
                 </tbody>
             </table>
         );
@@ -82,6 +68,8 @@ class CourseRow extends React.Component {
         super(props)
         this.deleteCourse = this.deleteCourse.bind(this);
         this.handleInputchange = this.handleInputchange.bind(this);
+        this.editCourse = this.editCourse.bind(this);
+        this.updateCourse = this.updateCourse.bind(this);
 
         this.state = {
             active: false,
@@ -92,7 +80,6 @@ class CourseRow extends React.Component {
 
     handleInputchange(event) {
         this.setState({ newCourseName: event.target.value });
-        console.log(event.target.value);
     }
 
     deleteCourse(courseId) {
@@ -119,6 +106,15 @@ class CourseRow extends React.Component {
         )
     }
 
+    editCourse() {
+        this.setState({ editing: true });
+    }
+
+    updateCourse() {
+        this.setState({ editing: false });
+        this.props.updateCourse(this.props.course._id, this.state.newCourseName);
+    }
+
     render() {
         return (
             <tr key={this.props.course._id} className={this.state.active ? "table-active" : ""} onClick={(e) => this.selectRow(this.props.course._id, e)}>
@@ -131,8 +127,12 @@ class CourseRow extends React.Component {
                 <td className="d-none d-lg-block text-muted">
                     {this.props.course._updatedAt}
                 </td>
-                <td className="text-muted">
+                {/* <td className="text-muted">
                     {this.props.course._id}
+                </td> */}
+                <td>
+                    <FontAwesomeIcon className="fa-fw" icon={faCheck} onClick={() => this.updateCourse()} />
+                    <FontAwesomeIcon className="fa-fw" icon={faEdit} onClick={() => this.editCourse()} />
                 </td>
             </tr >
         )

@@ -18,6 +18,7 @@ class CourseView extends React.Component {
         this.deleteCourse = this.deleteCourse.bind(this);
         this.addCourse = this.addCourse.bind(this);
         this.handleInputchange = this.handleInputchange.bind(this);
+        this.updateCourse = this.updateCourse.bind(this);
     }
 
     componentDidMount() {
@@ -43,6 +44,17 @@ class CourseView extends React.Component {
             .then(() => {
                 this.refreshCourses();
             });
+    }
+
+    updateCourse(courseId, newName) {
+        CourseService.findCourseById(courseId)
+            .then((resp) => {
+                resp["name"] = newName;
+                CourseService.updateCourse(courseId, resp)
+                    .then(() => {
+                        this.refreshCourses();
+                    })
+            })
     }
 
     handleInputchange(event) {
@@ -78,7 +90,7 @@ class CourseView extends React.Component {
                         <button onClick={this.toggleView} data-toggle="buttons" className="btn btn-outline-secondary" type="button"><FontAwesomeIcon icon={faThLarge} /></button>
                     </div>
                 </div>
-                { this.state.tableActive && <CourseTable deleteCourse={this.deleteCourse} courses={this.state.courses} />}
+                { this.state.tableActive && <CourseTable updateCourse={this.updateCourse} deleteCourse={this.deleteCourse} courses={this.state.courses} />}
                 { !this.state.tableActive && <CourseGrid courses={this.state.courses} />}
             </div >
         );
