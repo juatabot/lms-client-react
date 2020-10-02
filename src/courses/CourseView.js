@@ -91,7 +91,7 @@ class CourseView extends React.Component {
                     </div>
                 </div>
                 { this.state.tableActive && <CourseTable updateCourse={this.updateCourse} deleteCourse={this.deleteCourse} courses={this.state.courses} />}
-                { !this.state.tableActive && <CourseGrid courses={this.state.courses} />}
+                { !this.state.tableActive && <CourseGrid updateCourse={this.updateCourse} deleteCourse={this.deleteCourse} courses={this.state.courses} />}
             </div >
         );
     }
