@@ -14,5 +14,5 @@ class Lesson extends React.Component {
                 </li>
             </div >
         )
-    }
+    }   
 } export default Lesson;
