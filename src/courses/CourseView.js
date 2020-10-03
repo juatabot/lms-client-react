@@ -5,6 +5,7 @@ import CourseGrid from './CourseGrid';
 import './CourseView.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faPlusCircle, faThLarge } from '@fortawesome/free-solid-svg-icons'
+import CourseEditor from './CourseEditor';
 
 class CourseView extends React.Component {
     constructor(props) {
@@ -13,12 +14,15 @@ class CourseView extends React.Component {
             "courses": [],
             "tableActive": true,
             "newCourseName": "",
+            "editorMode": false,
+            "editorModeCourseId": "",
         }
         this.toggleView = this.toggleView.bind(this);
         this.deleteCourse = this.deleteCourse.bind(this);
         this.addCourse = this.addCourse.bind(this);
         this.handleInputchange = this.handleInputchange.bind(this);
         this.updateCourse = this.updateCourse.bind(this);
+        this.editCourse = this.editCourse.bind(this);
     }
 
     componentDidMount() {
@@ -72,27 +76,44 @@ class CourseView extends React.Component {
         }
     }
 
+    // go to course editor view
+    editCourse(courseId) {
+        this.setState({
+            editorMode: true,
+            editorModeCourseId: courseId
+        });
+        console.log(courseId);
+
+    }
+
     render() {
-        return (
-            <div className="container">
-                <h1 className="container-title">
-                    Course Manager
-                    </h1>
-                <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                        <button className="btn btn-outline-secondary" type="button"><FontAwesomeIcon icon={faBars} /></button>
+        if (!this.state.editorMode) {
+            return (
+
+                <div className="container">
+                    <h1 className="container-title">
+                        Course Manager
+                        </h1>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <button className="btn btn-outline-secondary" type="button"><FontAwesomeIcon icon={faBars} /></button>
+                        </div>
+                        <input type="text" className="form-control" placeholder="Add a new course..." value={this.state.newCourseName} onChange={this.handleInputchange} />
+                        <div className="input-group-append">
+                            <button className="btn btn-outline-secondary" onClick={this.addCourse} type="button"><FontAwesomeIcon icon={faPlusCircle} /></button>
+                        </div>
+                        <div>
+                            <button onClick={this.toggleView} data-toggle="buttons" className="btn btn-outline-secondary" type="button"><FontAwesomeIcon icon={faThLarge} /></button>
+                        </div>
                     </div>
-                    <input type="text" className="form-control" placeholder="Add a new course..." value={this.state.newCourseName} onChange={this.handleInputchange} />
-                    <div className="input-group-append">
-                        <button className="btn btn-outline-secondary" onClick={this.addCourse} type="button"><FontAwesomeIcon icon={faPlusCircle} /></button>
-                    </div>
-                    <div>
-                        <button onClick={this.toggleView} data-toggle="buttons" className="btn btn-outline-secondary" type="button"><FontAwesomeIcon icon={faThLarge} /></button>
-                    </div>
-                </div>
-                { this.state.tableActive && <CourseTable updateCourse={this.updateCourse} deleteCourse={this.deleteCourse} courses={this.state.courses} />}
-                { !this.state.tableActive && <CourseGrid updateCourse={this.updateCourse} deleteCourse={this.deleteCourse} courses={this.state.courses} />}
-            </div >
-        );
+                    { this.state.tableActive && <CourseTable editCourse={this.editCourse} updateCourse={this.updateCourse} deleteCourse={this.deleteCourse} courses={this.state.courses} />}
+                    { !this.state.tableActive && <CourseGrid updateCourse={this.updateCourse} deleteCourse={this.deleteCourse} courses={this.state.courses} />}
+                </div >
+            );
+        }
+        else {
+            return <CourseEditor courseId={this.state.editorModeCourseId} />
+        }
+
     }
 } export default CourseView;

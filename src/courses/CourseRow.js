@@ -10,6 +10,7 @@ class CourseRow extends React.Component {
         this.handleInputchange = this.handleInputchange.bind(this);
         this.editCourse = this.editCourse.bind(this);
         this.updateCourse = this.updateCourse.bind(this);
+        this.courseEditor = this.courseEditor.bind(this);
 
         this.state = {
             active: false,
@@ -24,6 +25,11 @@ class CourseRow extends React.Component {
 
     deleteCourse(courseId) {
         this.props.deleteCourse(courseId);
+    }
+
+    // go to course editor view
+    courseEditor(courseId) {
+        this.props.editCourse(courseId);
     }
 
     selectRow(rowId, e) {
@@ -67,7 +73,7 @@ class CourseRow extends React.Component {
                 className={this.state.active ? "table-active" : ""}
                 onClick={(e) => this.selectRow(this.props.course._id, e)}>
 
-                <td className="font-weight-bold" >
+                <td className="font-weight-bold" onClick={this.state.editing ? null : () => this.courseEditor(this.props.course._id)}>
                     {this.state.editing ? this.editingInput() : this.props.course.name}
                 </td >
                 <td>

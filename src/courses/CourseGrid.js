@@ -40,7 +40,7 @@ class CourseCard extends CourseRow {
                 onClick={(e) => this.selectRow(this.props.course._id, e)}>
 
                 <div className="card">
-                    <div className={this.state.active ? "card-body text-primary bg-dark" : "card-body text-primary"}>
+                    <div className={this.state.active ?  "card-body text-primary bg-dark" : "card-body text-primary"}>
                         <div className="card-title font-weight-bold">
                             {this.state.editing ? this.editingInput() : this.props.course.name}
                         </div>

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './CourseTable.css';
 import CourseRow from './CourseRow';
+import CourseEditor from './CourseEditor';
 
 class CourseTable extends React.Component {
     constructor(props) {
@@ -59,6 +60,7 @@ class CourseTable extends React.Component {
                         <CourseRow
                             key={course._id}
                             course={course}
+                            editCourse={this.props.editCourse}
                             updateCourse={this.updateCourse}
                             deleteCourse={this.deleteCourse}
                             selectRow={this.selectRow}
