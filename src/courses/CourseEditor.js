@@ -24,6 +24,7 @@ class CourseEditor extends React.Component {
                     courseName: resp.name
                 });
             })
+        console.log(this.props);
     }
 
     render() {

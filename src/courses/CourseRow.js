@@ -2,6 +2,7 @@ import { faTrash, faEdit, faThList, faCheck } from '@fortawesome/free-solid-svg-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './CourseTable.css';
+import { BrowserRouter, Route, Link, Redirect } from "react-router-dom";
 
 class CourseRow extends React.Component {
     constructor(props) {
@@ -74,17 +75,17 @@ class CourseRow extends React.Component {
                 onClick={(e) => this.selectRow(this.props.course._id, e)}>
 
                 <td className="font-weight-bold" onClick={this.state.editing ? null : () => this.courseEditor(this.props.course._id)}>
-                    {this.state.editing ? this.editingInput() : this.props.course.name}
+                    <Link to={`/course/edit/${this.props.course._id}`}>
+                        {this.state.editing ? this.editingInput() : this.props.course.name}
+                    </Link>
                 </td >
+
                 <td>
                     {this.props.course._nuid}
                 </td>
                 <td className="d-none d-lg-block text-muted">
                     {this.props.course._updatedAt}
                 </td>
-                {/* <td className="text-muted">
-                    {this.props.course._id}
-                </td> */}
                 <td>
                     <FontAwesomeIcon className="fa-fw" icon={faCheck} onClick={() => this.updateCourse()} />
                     <FontAwesomeIcon className="fa-fw" icon={faEdit} onClick={() => this.editCourse()} />

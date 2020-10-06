@@ -45,7 +45,7 @@ class CourseTable extends React.Component {
     render() {
         return (
             <table className="table">
-                <thead>
+                <tbody>
                     <tr>
                         <th>Title</th>
                         <th>Owner</th>
@@ -54,8 +54,6 @@ class CourseTable extends React.Component {
                             <FontAwesomeIcon className="fa-fw" icon={faTrash} onClick={() => this.deleteCourse()} />
                         </th>
                     </tr>
-                </thead>
-                <tbody>
                     {this.props.courses.map(course => (
                         <CourseRow
                             key={course._id}

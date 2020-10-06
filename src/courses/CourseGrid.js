@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CourseTable from './CourseTable';
 import CourseRow from './CourseRow';
 import './CourseGrid.css';
+import { BrowserRouter, Route, Link, Redirect } from "react-router-dom";
+
 
 class CourseGrid extends CourseTable {
     constructor(props) {
@@ -13,7 +15,7 @@ class CourseGrid extends CourseTable {
     render() {
         return (
             <div>
-                <nav class="navbar navbar-light bg-light">
+                <nav className="navbar navbar-light bg-light">
                     <FontAwesomeIcon className="fa-fw deleteBtn" icon={faTrash} onClick={() => this.deleteCourse()} />
                 </nav>
                 <div className="card-deck">
@@ -40,9 +42,11 @@ class CourseCard extends CourseRow {
                 onClick={(e) => this.selectRow(this.props.course._id, e)}>
 
                 <div className="card">
-                    <div className={this.state.active ?  "card-body text-primary bg-dark" : "card-body text-primary"}>
+                    <div className={this.state.active ? "card-body text-primary bg-dark" : "card-body text-primary"}>
                         <div className="card-title font-weight-bold">
-                            {this.state.editing ? this.editingInput() : this.props.course.name}
+                            <Link to={`/course/edit/${this.props.course._id}`}>
+                                {this.state.editing ? this.editingInput() : this.props.course.name}
+                            </Link>
                         </div>
                         <div className="card-subtitle mb-2 text-muted">{this.props.course._nuid}</div>
                         <small className="text-muted">
