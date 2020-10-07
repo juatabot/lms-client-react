@@ -1,8 +1,8 @@
-import { faTrash, faEdit, faThList, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './CourseTable.css';
-import { BrowserRouter, Route, Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class CourseRow extends React.Component {
     constructor(props) {
@@ -75,9 +75,10 @@ class CourseRow extends React.Component {
                 onClick={(e) => this.selectRow(this.props.course._id, e)}>
 
                 <td className="font-weight-bold" onClick={this.state.editing ? null : () => this.courseEditor(this.props.course._id)}>
-                    <Link to={`/course/edit/${this.props.course._id}`}>
-                        {this.state.editing ? this.editingInput() : this.props.course.name}
-                    </Link>
+                    {this.state.editing ? this.editingInput() : <Link to={`/course/edit/${this.props.course._id}`}>
+                        {this.props.course.name}
+                    </Link>}
+
                 </td >
 
                 <td>

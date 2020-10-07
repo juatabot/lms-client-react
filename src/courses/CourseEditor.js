@@ -24,7 +24,6 @@ class CourseEditor extends React.Component {
                     courseName: resp.name
                 });
             })
-        console.log(this.props);
     }
 
     render() {
@@ -39,7 +38,7 @@ class CourseEditor extends React.Component {
                     </div>
                     <div className="col-sm-9">
                         <LessonTabs lessons={this.state.lessons} />
-                            <TopicPills pills={this.state.pills} />
+                        <TopicPills pills={this.state.pills} />
                     </div>
                 </div>
             </div >

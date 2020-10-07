@@ -1,9 +1,8 @@
-import { faTrash, faEdit, faThList, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './CourseTable.css';
 import CourseRow from './CourseRow';
-import CourseEditor from './CourseEditor';
 
 class CourseTable extends React.Component {
     constructor(props) {

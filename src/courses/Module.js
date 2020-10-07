@@ -2,10 +2,6 @@ import React from 'react';
 
 
 class Module extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="container">

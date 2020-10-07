@@ -1,17 +1,13 @@
 import React from 'react';
-import { faTrash, faEdit, faThList, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CourseTable from './CourseTable';
 import CourseRow from './CourseRow';
 import './CourseGrid.css';
-import { BrowserRouter, Route, Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 class CourseGrid extends CourseTable {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>
@@ -23,6 +19,7 @@ class CourseGrid extends CourseTable {
                         <CourseCard
                             key={course._id}
                             course={course}
+                            editCourse={this.props.editCourse}
                             updateCourse={this.updateCourse}
                             deleteCourse={this.deleteCourse}
                             selectRow={this.selectRow}
@@ -35,6 +32,7 @@ class CourseGrid extends CourseTable {
 } export default CourseGrid;
 
 class CourseCard extends CourseRow {
+
     render() {
         return (
             <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2"
@@ -43,10 +41,10 @@ class CourseCard extends CourseRow {
 
                 <div className="card">
                     <div className={this.state.active ? "card-body text-primary bg-dark" : "card-body text-primary"}>
-                        <div className="card-title font-weight-bold">
-                            <Link to={`/course/edit/${this.props.course._id}`}>
-                                {this.state.editing ? this.editingInput() : this.props.course.name}
-                            </Link>
+                        <div className="card-title font-weight-bold" onClick={this.state.editing ? null : () => this.courseEditor(this.props.course._id)}>
+                            {this.state.editing ? this.editingInput() : <Link to={`/course/edit/${this.props.course._id}`}>
+                                {this.props.course.name}
+                            </Link>}
                         </div>
                         <div className="card-subtitle mb-2 text-muted">{this.props.course._nuid}</div>
                         <small className="text-muted">
@@ -58,7 +56,7 @@ class CourseCard extends CourseRow {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }

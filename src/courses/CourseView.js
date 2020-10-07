@@ -128,7 +128,7 @@ class CourseView extends React.Component {
                         </Route>
                         <Route
                             path="/course/grid"
-                            render={() => <CourseGrid updateCourse={this.updateCourse} deleteCourse={this.deleteCourse} courses={this.state.courses} />}>
+                            render={() => <CourseGrid editCourse={this.editCourse} updateCourse={this.updateCourse} deleteCourse={this.deleteCourse} courses={this.state.courses} />}>
                         </Route>
                     </div >
                 </BrowserRouter>
