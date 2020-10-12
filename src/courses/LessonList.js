@@ -1,23 +1,26 @@
 import React from 'react';
 import Lesson from './Lesson';
 import './LessonList.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-
-class LessonTabs extends React.Component {
+class Lessons extends React.Component {
     render() {
         return (
-            <div className="container">
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <ul className="navbar-nav">
-                        {this.props.lessons.map(lesson => (
-                            <Lesson
-                                key={lesson}
-                                lesson={lesson} />
-                        ))}
-                    </ul>
-                </nav>
-            </div >
+            <div>
+                <ul class="nav nav-tabs">
+                    {this.props.lessons.map(lesson => (
+                        <Lesson
+                            key={lesson}
+                            lesson={lesson} />
+                    ))}
+                    <li class="nav-item">
+                        <a class="nav-link active">
+                            <FontAwesomeIcon className="fa-fw" icon={faPlus} />
+                        </a>
+                    </li>
+                </ul>
+            </div>
         )
-
     }
-} export default LessonTabs;
+} export default Lessons;

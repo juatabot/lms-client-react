@@ -1,6 +1,7 @@
 import React from 'react';
 import Module from './Module';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 class ModuleList extends React.Component {
     render() {
@@ -12,6 +13,11 @@ class ModuleList extends React.Component {
                             key={module}
                             module={module} />
                     ))}
+                    <div className="container">
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            <FontAwesomeIcon className="fa-fw" icon={faPlus} />
+                        </li>
+                    </div>
                 </ul>
             </div >
         )

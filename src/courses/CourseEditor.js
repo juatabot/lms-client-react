@@ -1,8 +1,10 @@
 import React from 'react';
 import { CourseService } from '../services/CourseService';
 import ModuleList from './ModuleList';
-import LessonTabs from './LessonList';
+import Lessons from './LessonList';
 import TopicPills from './TopicPills';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 
 class CourseEditor extends React.Component {
@@ -30,6 +32,7 @@ class CourseEditor extends React.Component {
         return (
             <div className="container">
                 <h1 className="container-title">
+                    <FontAwesomeIcon className="fa-fw" icon={faTimes} />
                     Course Editor - {this.state.courseName}
                 </h1>
                 <div className="row">
@@ -37,7 +40,7 @@ class CourseEditor extends React.Component {
                         <ModuleList modules={this.state.modules} />
                     </div>
                     <div className="col-sm-9">
-                        <LessonTabs lessons={this.state.lessons} />
+                        <Lessons lessons={this.state.lessons} />
                         <TopicPills pills={this.state.pills} />
                     </div>
                 </div>
