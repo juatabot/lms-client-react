@@ -8,7 +8,7 @@ class Lessons extends React.Component {
     render() {
         return (
             <div>
-                <ul class="nav nav-tabs">
+                <ul class="nav nav-tabs nav-fill">
                     {this.props.lessons.map(lesson => (
                         <Lesson
                             key={lesson}
