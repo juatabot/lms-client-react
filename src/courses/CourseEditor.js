@@ -5,15 +5,9 @@ import Lessons from './LessonList';
 import TopicPills from './TopicPills';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { combineReducers, createStore } from "redux";
-import { Provider } from "react-redux";
-import moduleReducer from '../reducers/ModuleReducer';
+import moduleService from "../services/ModuleService";
+import { connect } from "react-redux";
 
-const rootReducer = combineReducers({
-    moduleReducer: moduleReducer
-});
-
-const store = createStore(rootReducer);
 
 
 class CourseEditor extends React.Component {
@@ -35,27 +29,49 @@ class CourseEditor extends React.Component {
                     courseName: resp.name
                 });
             })
+
+        this.props.findCourseById(this.props.courseId)
+        this.props.findModulesForCourse(this.props.courseId)
     }
 
     render() {
         return (
-            <Provider store={store}>
-                <div className="container">
-                    <h1 className="container-title">
-                        <FontAwesomeIcon className="fa-fw" icon={faTimes} />
+            <div className="container">
+                <h1 className="container-title">
+                    <FontAwesomeIcon className="fa-fw" icon={faTimes} />
                     Course Editor - {this.state.courseName}
-                    </h1>
-                    <div className="row">
-                        <div className="col-sm-3">
-                            <ModuleList modules={this.state.modules} />
-                        </div>
-                        <div className="col-sm-9">
-                            <Lessons lessons={this.state.lessons} />
-                            <TopicPills pills={this.state.pills} />
-                        </div>
+                </h1>
+                <div className="row">
+                    <div className="col-sm-3">
+                        <ModuleList modules={this.state.modules} />
                     </div>
-                </div >
-            </Provider>
+                    <div className="col-sm-9">
+                        <Lessons lessons={this.state.lessons} />
+                        <TopicPills pills={this.state.pills} />
+                    </div>
+                </div>
+            </div >
         )
     }
-} export default CourseEditor;
+}
+
+const stateToProperty = (state) => ({
+    course: state.courseReducer.course
+})
+
+const propertyToDispatchMapper = (dispatch) => ({
+    findModulesForCourse: courseId => moduleService.findModulesForCourse(courseId)
+        .then(actualModules => dispatch({
+            type: "FIND_MODULES_FOR_COURSE",
+            modules: actualModules
+        })),
+    findCourseById: (courseId) => CourseService.findCourseById(courseId)
+        .then(actualCourse => dispatch({
+            type: "FIND_COURSE_BY_ID",
+            course: actualCourse
+        }))
+})
+
+export default connect
+    (stateToProperty, propertyToDispatchMapper)
+    (CourseEditor)

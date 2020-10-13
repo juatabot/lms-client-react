@@ -26,7 +26,7 @@ const initialState = {
 
 const moduleReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "SET_MODULES":
+        case "FIND_MODULES_FOR_COURSE":
             return {
                 modules: action.modules
             }
@@ -34,10 +34,8 @@ const moduleReducer = (state = initialState, action) => {
             return {
                 modules: [
                     ...state.modules,
-                    {
-                        _id: (Date.now()) + "",
-                        title: "New Module"
-                    }]
+                    action.module
+                ]
             }
         case DELETE_MODULE:
             return {

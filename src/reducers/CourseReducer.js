@@ -11,8 +11,8 @@ const courseReducer = (state = initialState, action) => {
                 course: action.course
             }
         default:
-            return state;
+            return state
     }
 }
 
-export default courseReducer;
+export default courseReducer

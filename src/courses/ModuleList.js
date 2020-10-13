@@ -13,6 +13,7 @@ import {
 } from '../actions/ModuleActions';
 
 const ModuleList = ({
+    course,
     modules = [],
     deleteModule,
     createModule,
@@ -55,19 +56,20 @@ const ModuleList = ({
                     </li>
                 ))}
                 <li className="list-group-item d-flex justify-content-between align-items-center">
-                    <FontAwesomeIcon className="fa-fw" icon={faPlus} onClick={createModule} />
+                    <FontAwesomeIcon className="fa-fw" icon={faPlus} onClick={() => createModule(course, { title: "New Module" })} />
                 </li>
             </ul>
         </div >
     )
 
 const stateToPropertyMapper = (state) => ({
-    modules: state.moduleReducer.modules
+    modules: state.moduleReducer.modules,
+    course: state.courseReducer.course
 })
 
 const propertyToDispatchMapper = (dispatch) => ({
     deleteModule: (module) => deleteModule(dispatch, module),
-    createModule: () => createModule(dispatch),
+    createModule: (course, module) => createModule(dispatch, course, module),
     updateModule: (module) => updateModule(dispatch, module)
 })
 
