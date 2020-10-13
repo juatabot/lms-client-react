@@ -7,8 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { combineReducers, createStore } from "redux";
 import { Provider } from "react-redux";
+import moduleReducer from '../reducers/ModuleReducer';
 
 const rootReducer = combineReducers({
+    moduleReducer: moduleReducer
 });
 
 const store = createStore(rootReducer);

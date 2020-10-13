@@ -8,14 +8,14 @@ class Lessons extends React.Component {
     render() {
         return (
             <div>
-                <ul class="nav nav-tabs nav-fill">
+                <ul className="nav nav-tabs nav-fill">
                     {this.props.lessons.map(lesson => (
                         <Lesson
                             key={lesson}
                             lesson={lesson} />
                     ))}
-                    <li class="nav-item">
-                        <a class="nav-link active">
+                    <li className="nav-item">
+                        <a className="nav-link active">
                             <FontAwesomeIcon className="fa-fw" icon={faPlus} />
                         </a>
                     </li>
