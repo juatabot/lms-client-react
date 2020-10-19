@@ -50,10 +50,11 @@ const TopicTabs = (
 
 const stateToPropertyMapper = (state) => ({
     topics: state.topicReducer.topics,
-    // lessonId: state.topicsReducer.lessonId,
 })
 
 const dispatchToPropertyMapper = (dispatch) => ({
+    saveTopic: (topic) =>
+        topicService.saveTopic(topic),
     createTopicForLesson: (lessonId) =>
         topicService
             .createTopicForLesson(lessonId, { title: "New Topic" })
@@ -67,6 +68,10 @@ const dispatchToPropertyMapper = (dispatch) => ({
                 type: "DELETE_TOPIC",
                 topicId
             })),
+    updateTopic: (topic) => dispatch({
+        type: "UPDATE_TOPIC",
+        topic
+    })
 })
 
 export default connect

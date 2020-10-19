@@ -30,7 +30,7 @@ const LessonTabs = (
             </button>
             {
               !lesson.editing &&
-              <span>  
+              <span>
                 <Link to={`/edit/${course._id}/modules/${moduleId}/lessons/${lesson._id}`}>
                   {lesson.title}
                 </Link>
@@ -58,23 +58,23 @@ const stateToPropertyMapper = (state) => ({
   moduleId: state.lessonReducer.moduleId
 })
 
-const dispatchToPropertyMapper = (dispath) => ({
+const dispatchToPropertyMapper = (dispatch) => ({
   saveLesson: (lesson) =>
     lessonService.saveLesson(lesson),
   deleteLesson: (lessonId) =>
     lessonService.deleteLesson(lessonId)
-      .then(status => dispath({
+      .then(status => dispatch({
         type: "DELETE_LESSON",
         lessonId
       })),
   createLessonForModule: (moduleId) =>
     lessonService
       .createLessonForModule(moduleId, { title: "New Lesson" })
-      .then(lesson => dispath({
+      .then(lesson => dispatch({
         type: "CREATE_LESSON",
         lesson
       })),
-  updateLesson: (lesson) => dispath({
+  updateLesson: (lesson) => dispatch({
     type: "UPDATE_LESSON",
     lesson
   })

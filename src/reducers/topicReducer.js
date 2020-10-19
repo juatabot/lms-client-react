@@ -4,20 +4,11 @@ export const topicReducer = (state = {}, action) => {
         case "UPDATE_TOPIC":
             return {
                 ...state,
-                topic: state
-                    .topic
+                topics: state
+                    .topics
                     .map(topic =>
                         topic._id === action.topic._id ?
                             action.topic : topic)
-            }
-        case "CREATE_TOPIC":
-            console.log(state);
-            return {
-                ...state,
-                topics: [
-                    ...state.topics,
-                    action.topic
-                ]
             }
         case "FIND_TOPICS_FOR_LESSON":
             return {
@@ -25,13 +16,17 @@ export const topicReducer = (state = {}, action) => {
                 lessonId: action.lessonId
             }
         case "CREATE_TOPIC":
-            console.log("creating lesson");
             return {
                 ...state,
                 topics: [
                     ...state.topics,
                     action.topic
                 ]
+            }
+        case "DELETE_TOPIC":
+            return {
+                ...state,
+                topics: state.topics.filter(topic => topic._id !== action.topicId)
             }
         default:
             return state

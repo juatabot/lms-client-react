@@ -23,7 +23,6 @@ class CourseRowComponent extends React.Component {
   }
 
   updateCourse = () => {
-    debugger
     this.setState({ editing: false })
     updateCourse(this.state.course._id, this.state.course)
   }
