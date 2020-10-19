@@ -1,9 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import lessonService from "../services/LessonService"
+import { Link } from "react-router-dom";
+
 
 const LessonTabs = (
   {
+    course,
     lessons = [],
     deleteLesson,
     createLessonForModule,
@@ -16,18 +19,22 @@ const LessonTabs = (
       {
         lessons.map(lesson =>
           <li key={lesson._id}>
-            <button className="btn" onClick={() => deleteLesson(lesson._id)}>
+            <button className="btn btn-danger mr-1" onClick={() => deleteLesson(lesson._id)}>
               Delete
             </button>
-            <button className="btn" onClick={() => updateLesson({ ...lesson, editing: true })}>
+            <button className="btn btn-secondary mr-1" onClick={() => updateLesson({ ...lesson, editing: true })}>
               Edit
             </button>
-            <button className="btn" onClick={() => updateLesson({ ...lesson, editing: false })}>
+            <button className="btn btn-secondary mr-1" onClick={() => updateLesson({ ...lesson, editing: false })}>
               Ok
             </button>
             {
               !lesson.editing &&
-              <span>{lesson.title}</span>
+              <span>  
+                <Link to={`/edit/${course._id}/modules/${moduleId}/lessons/${lesson._id}`}>
+                  {lesson.title}
+                </Link>
+              </span>
             }
             {
               lesson.editing &&
@@ -39,13 +46,14 @@ const LessonTabs = (
         )
       }
     </ul>
-    <button onClick={() =>
+    <button className="btn btn-success mr-1" onClick={() =>
       createLessonForModule(moduleId)}>
       Create
     </button>
   </div>
 
 const stateToPropertyMapper = (state) => ({
+  course: state.courseReducer.course,
   lessons: state.lessonReducer.lessons,
   moduleId: state.lessonReducer.moduleId
 })

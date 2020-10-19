@@ -1,12 +1,15 @@
 import React from "react";
-import {findCourseById} from "../services/CourseService";
+import { findCourseById } from "../services/CourseService";
 import moduleService from "../services/ModuleService";
 import lessonService from "../services/LessonService"
 import ModuleList from "./ModuleList";
 import LessonTabs from "./LessonTabs";
-import {connect} from "react-redux";
+import TopicTabs from "./TopicTabs";
+import { connect } from "react-redux";
+import topicService from "../services/TopicService";
 
-class CourseEditor extends React.Component{
+
+class CourseEditor extends React.Component {
 
   state = {
     course: {
@@ -16,32 +19,45 @@ class CourseEditor extends React.Component{
   }
 
   componentDidMount() {
-    const courseId = this.props.match.params.courseId
-    const moduleId = this.props.match.params.moduleId
+    const courseId = this.props.match.params.courseId;
+    const moduleId = this.props.match.params.moduleId;
+    const lessonId = this.props.match.params.lessonId;
+
     this.props.findCourseById(courseId)
     this.props.findModulesForCourse(courseId)
-    if(moduleId) {
+
+    if (moduleId) {
       this.props.findLessonsForModule(moduleId)
+    }
+    if (lessonId) {
+      this.props.findTopicsForLesson(lessonId);
     }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const moduleId = this.props.match.params.moduleId
-    const previousModuleId = prevProps.match.params.moduleId
-    if(moduleId !== previousModuleId) {
-      this.props.findLessonsForModule(moduleId)
+    const moduleId = this.props.match.params.moduleId;
+    const previousModuleId = prevProps.match.params.moduleId;
+    if (moduleId !== previousModuleId) {
+      this.props.findLessonsForModule(moduleId);
+    }
+
+    const lessonId = this.props.match.params.lessonId;
+    const previousLessonId = prevProps.match.params.lessonId;
+    if (lessonId !== previousLessonId) {
+      this.props.findTopicsForLesson(lessonId);
     }
   }
 
   render() {
-    return(
+    return (
       <div>
         <div className="row">
           <div className="col-4">
-            <ModuleList/>
+            <ModuleList />
           </div>
           <div className="col-8">
-            <LessonTabs/>
+            <LessonTabs />
+            <TopicTabs />
           </div>
         </div>
       </div>
@@ -53,6 +69,14 @@ const stateToProperty = (state) => ({
   course: state.courseReducer.course
 })
 const propertyToDispatchMapper = (dispatch) => ({
+  findTopicsForLesson: (lessonId) =>
+    topicService
+      .findTopicsForLesson(lessonId)
+      .then(topics => dispatch({
+        type: "FIND_TOPICS_FOR_LESSON",
+        topics,
+        lessonId,
+      })),
   findLessonsForModule: moduleId => {
     lessonService.findLessonsForModule(moduleId)
       .then(lessons => dispatch({
@@ -75,5 +99,5 @@ const propertyToDispatchMapper = (dispatch) => ({
 })
 
 export default connect
-(stateToProperty, propertyToDispatchMapper)
-(CourseEditor)
+  (stateToProperty, propertyToDispatchMapper)
+  (CourseEditor)

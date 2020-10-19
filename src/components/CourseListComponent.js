@@ -21,17 +21,6 @@ class CourseListComponent extends React.Component {
       lastUpdated: 'yesterday'
     }
 
-    // UNSAFE:
-    // const newState = {
-    //   courses: [
-    //     ...this.state.courses, newCourse
-    //   ]
-    // }
-    //
-    // this.setState(newState)
-
-    // SAFE:
-
     courseService.createCourse(newCourse)
       .then(actualCourse => this.setState(function (prevState) {
           return {

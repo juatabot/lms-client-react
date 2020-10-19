@@ -1,5 +1,5 @@
 import React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import {
   DELETE_MODULE,
   CREATE_MODULE,
@@ -8,60 +8,59 @@ import {
   createModule,
   deleteModule
 } from "../actions/moduleActions";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ModuleList = (
   { course,
-    modules=[],
+    modules = [],
     deleteModule,
     createModule,
-    updateModule}) =>
+    updateModule }) =>
   <div>
     <h1>{course.title}</h1>
     <ul>
       {
         modules.map(module =>
-        <li key={module._id}>
-          <button
-            onClick={() => deleteModule(module)}>
-            Delete
+          <li key={module._id}>
+            <button
+              className="btn btn-danger mr-1"
+              onClick={() => deleteModule(module)}>
+              Delete
           </button>
-          {
-            module.editing &&
+            {
+              module.editing &&
               <span>
-                <button onClick={() =>
-                  updateModule({...module, editing: false})
+                <button className="btn btn-secondary mr-1" onClick={() =>
+                  updateModule({ ...module, editing: false })
                 }>
                   Ok
                 </button>
                 <input
                   onChange={(event) =>
-                    updateModule({...module, title: event.target.value})
+                    updateModule({ ...module, title: event.target.value })
                   }
-                  value={module.title}/>
+                  value={module.title} />
               </span>
-          }
-          {
-            !module.editing &&
+            }
+            {
+              !module.editing &&
               <span>
-                <button onClick={
-                  () => updateModule({...module, editing: true})}>
+                <button className="btn btn-secondary mr-1" onClick={
+                  () => updateModule({ ...module, editing: true })}>
                   Edit
                 </button>
                 <Link to={`/edit/${course._id}/modules/${module._id}`}>
-                {module.title}
+                  {module.title}
                 </Link>
               </span>
-          }
-        </li>)
+            }
+          </li>)
       }
     </ul>
-    <button onClick={() => createModule(course, {title: "New Module"})}>
+    <button className="btn btn-success mr-1" onClick={() => createModule(course, { title: "New Module" })}>
       Create Module
     </button>
   </div>
-
-// export default ModuleList
 
 const stateToPropertyMapper = (state) => ({
   modules: state.moduleReducer.modules,
@@ -75,6 +74,6 @@ const propertyToDispatchMapper = (dispatch) => ({
 })
 
 export default connect
-(stateToPropertyMapper,
-  propertyToDispatchMapper)
-(ModuleList)
+  (stateToPropertyMapper,
+    propertyToDispatchMapper)
+  (ModuleList)

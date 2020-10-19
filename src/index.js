@@ -9,13 +9,15 @@ import fsm from "./reducers/fsmReducer"
 import moduleReducer from "./reducers/modulesReducer";
 import courseReducer from "./reducers/courseReducer";
 import {lessonReducer} from "./reducers/lessonReducer";
+import {topicReducer} from "./reducers/topicReducer";
 
 
 const rootReducer = combineReducers({
   fsm,
   moduleReducer,
   courseReducer,
-  lessonReducer
+  lessonReducer,
+  topicReducer
 })
 
 const store = createStore(rootReducer)

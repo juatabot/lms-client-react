@@ -1,6 +1,6 @@
 import React from "react";
-import {updateCourse} from "../services/CourseService";
-import {Link} from "react-router-dom";
+import { updateCourse } from "../services/CourseService";
+import { Link } from "react-router-dom";
 
 class CourseRowComponent extends React.Component {
   state = {
@@ -24,7 +24,7 @@ class CourseRowComponent extends React.Component {
 
   updateCourse = () => {
     debugger
-    this.setState({editing: false})
+    this.setState({ editing: false })
     updateCourse(this.state.course._id, this.state.course)
   }
 
@@ -36,7 +36,7 @@ class CourseRowComponent extends React.Component {
             this.state.editing === true &&
             <input
               onChange={this.updateTitle}
-              value={this.state.course.title}/>
+              value={this.state.course.title} />
           }
           {
             this.state.editing === false &&
@@ -48,18 +48,18 @@ class CourseRowComponent extends React.Component {
         <td>{this.props.course.owner}</td>
         <td>{this.props.course.lastUpdated}</td>
         <td>
-          <button onClick={() => this.props.deleteCourse(this.props.course)}>
+          <button className="btn btn-danger mr-1" onClick={() => this.props.deleteCourse(this.props.course)}>
             Delete
           </button>
           {
             this.state.editing &&
-            <button onClick={this.updateCourse}>
+            <button className="btn btn-secondary mr-1" onClick={this.updateCourse}>
               Ok
             </button>
           }
           {
             !this.state.editing &&
-            <button onClick={() => this.setState({editing: true})}>
+            <button className="btn btn-secondary mr-1" onClick={() => this.setState({ editing: true })}>
               Edit
             </button>
           }

@@ -11,7 +11,6 @@ export const lessonReducer = (state = {}, action) => {
               action.lesson : lesson)
       }
     case "CREATE_LESSON":
-      console.log(state.lessons)
       return {
         ...state,
         lessons: [
