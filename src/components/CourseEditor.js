@@ -50,7 +50,7 @@ class CourseEditor extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <div className="row">
           <div className="col-4">
             <ModuleList />
@@ -74,15 +74,14 @@ const propertyToDispatchMapper = (dispatch) => ({
       .findTopicsForLesson(lessonId)
       .then(topics => dispatch({
         type: "FIND_TOPICS_FOR_LESSON",
-        topics,
-        lessonId,
+        topics, topics,
       })),
   findLessonsForModule: moduleId => {
     lessonService.findLessonsForModule(moduleId)
       .then(lessons => dispatch({
         type: "FIND_LESSONS_FOR_MODULE",
-        lessons,
-        moduleId
+        lessons: lessons,
+        moduleId: moduleId
       }))
   },
   findModulesForCourse: courseId =>

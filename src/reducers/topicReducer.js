@@ -21,7 +21,8 @@ export const topicReducer = (state = {}, action) => {
                 topics: [
                     ...state.topics,
                     action.topic
-                ]
+                ],
+                lessonId: action.lessonId
             }
         case "DELETE_TOPIC":
             return {

@@ -16,12 +16,13 @@ const ModuleList = (
     deleteModule,
     createModule,
     updateModule }) =>
-  <div>
-    <h1>{course.title}</h1>
-    <ul>
+
+  <div className="card">
+    <ul className="list-group-flush">
+      <h1>{course.title}</h1>
       {
         modules.map(module =>
-          <li key={module._id}>
+          <li className="list-group-item" key={module._id}>
             <button
               className="btn btn-danger mr-1"
               onClick={() => deleteModule(module)}>

@@ -11,67 +11,72 @@ const TopicTabs = (
         deleteTopic,
         updateTopic,
     }) =>
-    <div>
-        <h1>Topics ({topics.length})</h1>
-        <ul>
+    <div className="card">
+        <ul className="list-group-flush">
+            <h2>Topics ({topics.length})</h2>
             {
                 topics.map(topic =>
-                    <li key={topic._id}>
+                    <li className="list-group-item" key={topic._id}>
                         <button className="btn btn-danger mr-1" onClick={() => deleteTopic(topic._id)}>
                             Delete
                          </button>
-                        <button className="btn btn-secondary mr-1" onClick={() => updateTopic({ ...topic, editing: true })}>
-                            Edit
-                        </button>
-                        <button className="btn btn-secondary mr-1" onClick={() => updateTopic({ ...topic, editing: false })}>
-                            Ok
-                        </button>
                         {
                             !topic.editing &&
                             <span>
+                                <button className="btn btn-secondary mr-1" onClick={() => updateTopic({ ...topic, editing: true })}>
+                                    Edit
+                                </button>
                                 {topic.title}
                             </span>
                         }
                         {
                             topic.editing &&
-                            <input
-                                onChange={(e) => updateTopic({ ...topic, title: e.target.value })}
-                                value={topic.title} />
+                            <span>
+                                <button className="btn btn-secondary mr-1" onClick={() => updateTopic({ ...topic, editing: false })}>
+                                    Ok
+                                </button>
+                                <input
+                                    onChange={(e) => updateTopic({ ...topic, title: e.target.value })}
+                                    value={topic.title} />
+                            </span>
                         }
                     </li>
                 )
             }
         </ul>
         <button className="btn btn-success mr-1" onClick={() =>
-            createTopicForLesson(lessonId)}>
+            createTopicForLesson(lessonId, { "title": "New Module" })}>
             Create
         </button>
     </div>
 
 const stateToPropertyMapper = (state) => ({
     topics: state.topicReducer.topics,
+    lessonId: state.topicReducer.lessonId,
 })
 
 const dispatchToPropertyMapper = (dispatch) => ({
-    saveTopic: (topic) =>
-        topicService.saveTopic(topic),
     createTopicForLesson: (lessonId) =>
         topicService
             .createTopicForLesson(lessonId, { title: "New Topic" })
             .then(topic => dispatch({
                 type: "CREATE_TOPIC",
-                topic
-            })),
+                topic,
+                lessonId
+            }))
+            .then(console.log(lessonId)),
     deleteTopic: (topicId) =>
         topicService.deleteTopic(topicId)
             .then(status => dispatch({
                 type: "DELETE_TOPIC",
                 topicId
             })),
-    updateTopic: (topic) => dispatch({
-        type: "UPDATE_TOPIC",
-        topic
-    })
+    updateTopic: (topic) =>
+        topicService.updateTopic(topic)
+            .then(status => dispatch({
+                type: "UPDATE_TOPIC",
+                topic
+            })),
 })
 
 export default connect

@@ -20,7 +20,7 @@ export const createLessonForModule = (moduleId, newLesson) =>
     }
   }).then(response => response.json())
 
-export const saveLesson = (newLesson) =>
+export const updateLesson = (newLesson) =>
   fetch(`${lessonUrl}/${newLesson._id}`, {
     method: "PUT",
     body: JSON.stringify(newLesson),
@@ -33,5 +33,5 @@ export default {
   findLessonsForModule,
   deleteLesson,
   createLessonForModule,
-  saveLesson
+  updateLesson
 }

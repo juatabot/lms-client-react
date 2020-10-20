@@ -23,25 +23,25 @@ class CourseListComponent extends React.Component {
 
     courseService.createCourse(newCourse)
       .then(actualCourse => this.setState(function (prevState) {
-          return {
-            courses: [
-              ...prevState.courses, actualCourse
-            ]
-          }
-        })
+        return {
+          courses: [
+            ...prevState.courses, actualCourse
+          ]
+        }
+      })
       )
-      .catch(error => {})
+      .catch(error => { })
   }
 
   deleteCourse = (course) => {
     courseService.deleteCourse(course._id)
       .then(statu => this.setState(prevState => ({
-          courses: prevState.courses.filter(c => c._id !== course._id)
-        })))
+        courses: prevState.courses.filter(c => c._id !== course._id)
+      })))
   }
 
   render() {
-    return(
+    return (
       <div className="container">
         <button
           onClick={this.createCourse}
@@ -51,19 +51,22 @@ class CourseListComponent extends React.Component {
         <h1>Course List</h1>
         <table className="table">
           <thead>
-          <tr>
-            <th>Title</th>
-          </tr>
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Last Modified</th>
+              <th scope="col">Actions</th>
+            </tr>
           </thead>
           <tbody>
-          {
-            this.state.courses.map(course =>
-              <CourseRowComponent
-                key={course._id}
-                deleteCourse={this.deleteCourse}
-                course={course}/>
-            )
-          }
+            {
+              this.state.courses.map(course =>
+                <CourseRowComponent
+                  key={course._id}
+                  deleteCourse={this.deleteCourse}
+                  course={course} />
+              )
+            }
           </tbody>
         </table>
       </div>

@@ -1,17 +1,14 @@
 const lessonUrl = "https://wbdv-generic-server.herokuapp.com/api/juat/lessons"
 const topicUrl = "https://wbdv-generic-server.herokuapp.com/api/juat/topics"
 
-export const updateTopic = (topicId, newTopic) => {
-    console.log("updating topic");
-    fetch(`${topicUrl}/${topicId}`, {
+export const updateTopic = (newTopic) =>
+    fetch(`${topicUrl}/${newTopic._id}`, {
         method: "PUT",
         body: JSON.stringify(newTopic),
         headers: {
             "content-type": "application/json"
         }
-    })
-        .then(response => response.json())
-}
+    }).then(response => response.json())
 
 export const findTopicsForLesson = (lessonId) =>
     fetch(`${lessonUrl}/${lessonId}/topics`)
@@ -26,24 +23,14 @@ export const createTopicForLesson = (lessonId, newTopic) =>
         }
     }).then(response => response.json())
 
-export const saveTopic = (newTopic) =>
-    fetch(`${topicUrl}/${newTopic._id}`, {
-        method: "PUT",
-        body: JSON.stringify(newTopic),
-        headers: {
-            "content-type": "application/json"
-        }
-    }).then(response => response.json())
-
 export const deleteTopic = (topicId) =>
     fetch(`${topicUrl}/${topicId}`, {
         method: "DELETE"
-    })
-        .then(response => response.json())
+    }).then(response => response.json())
 
 export default {
     findTopicsForLesson,
     createTopicForLesson,
     deleteTopic,
-    saveTopic,
+    updateTopic,
 }
