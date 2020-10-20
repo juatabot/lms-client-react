@@ -1,5 +1,9 @@
+const initialState = {
+  lessons: [],
+  lesson: {}
+}
 
-export const lessonReducer = (state = {}, action) => {
+export const lessonReducer = (state = initialState, action) => {
   switch (action.type) {
     case "UPDATE_LESSON":
       return {

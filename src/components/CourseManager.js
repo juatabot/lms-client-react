@@ -10,25 +10,27 @@ export class CourseManager extends React.Component {
   render() {
     return (
       <Router>
-        <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <ul class="navbar-nav mr-auto">
+            <Link className="nav-item active nav-link" to="/login">Login</Link>
+            <Link className="nav-item active nav-link" to="/register">Register</Link>
+            <Link className="nav-item active nav-link" to="/profile">Profile</Link>
+            <Link className="nav-item active nav-link" to="/courses">Course List</Link>
+          </ul>
+        </nav>
 
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
-          <Link to="/profile">Profile</Link>
-          <Link to="/courses">Course List</Link>
+        <Route path="/login" exact component={Login} />
+        <Route path="/register" exact component={Register} />
+        <Route path="/profile" exact component={Profile} />
+        <Route path="/courses" exact component={CourseListComponent} />
+        <Route path={[
+          "/edit/:courseId",
+          "/edit/:courseId/modules/:moduleId",
+          "/edit/:courseId/modules/:moduleId/lessons/:lessonId"
+        ]}
+          exact
+          component={CourseEditor} />
 
-          <Route path="/login" exact component={Login} />
-          <Route path="/register" exact component={Register} />
-          <Route path="/profile" exact component={Profile} />
-          <Route path="/courses" exact component={CourseListComponent} />
-          <Route path={[
-            "/edit/:courseId",
-            "/edit/:courseId/modules/:moduleId",
-            "/edit/:courseId/modules/:moduleId/lessons/:lessonId"
-          ]}
-            exact
-            component={CourseEditor} />
-        </div>
       </Router>
     )
   }

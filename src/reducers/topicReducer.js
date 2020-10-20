@@ -1,5 +1,9 @@
+const initialState = {
+    topics: [],
+    topic: {}
+  }
 
-export const topicReducer = (state = {}, action) => {
+export const topicReducer = (state = initialState, action) => {
     switch (action.type) {
         case "UPDATE_TOPIC":
             return {
