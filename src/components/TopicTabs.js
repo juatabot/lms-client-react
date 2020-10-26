@@ -1,10 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import topicService from "../services/TopicService";
-
+import { Link } from "react-router-dom";
 
 const TopicTabs = (
     {
+        course,
+        moduleId,
         lessonId,
         createTopicForLesson,
         topics = [],
@@ -26,7 +28,9 @@ const TopicTabs = (
                                 <button className="btn btn-secondary mr-1" onClick={() => updateTopic({ ...topic, editing: true })}>
                                     Edit
                                 </button>
-                                {topic.title}
+                                <Link to={`/edit/${course._id}/modules/${moduleId}/lessons/${lessonId}/topics/${topic._id}`}>
+                                    {topic.title}
+                                </Link>
                             </span>
                         }
                         {
@@ -43,16 +47,18 @@ const TopicTabs = (
                     </li>
                 )
             }
-        </ul>
-        <button className="btn btn-success mr-1" onClick={() =>
-            createTopicForLesson(lessonId, { "title": "New Module" })}>
-            Create
+            <button className="btn btn-success" onClick={() =>
+                createTopicForLesson(lessonId, { "title": "New Module" })}>
+                Create
         </button>
+        </ul>
     </div>
 
 const stateToPropertyMapper = (state) => ({
     topics: state.topicReducer.topics,
     lessonId: state.topicReducer.lessonId,
+    course: state.courseReducer.course,
+    moduleId: state.lessonReducer.moduleId
 })
 
 const dispatchToPropertyMapper = (dispatch) => ({
@@ -63,8 +69,7 @@ const dispatchToPropertyMapper = (dispatch) => ({
                 type: "CREATE_TOPIC",
                 topic,
                 lessonId
-            }))
-            .then(console.log(lessonId)),
+            })),
     deleteTopic: (topicId) =>
         topicService.deleteTopic(topicId)
             .then(status => dispatch({

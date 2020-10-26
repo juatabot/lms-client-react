@@ -26,6 +26,7 @@ class CourseEditor extends React.Component {
     const moduleId = this.props.match.params.moduleId;
     const lessonId = this.props.match.params.lessonId;
     const topicId = this.props.match.params.topicId;
+
     this.props.findCourseById(courseId)
     this.props.findModulesForCourse(courseId)
 
@@ -53,8 +54,8 @@ class CourseEditor extends React.Component {
       this.props.findTopicsForLesson(lessonId);
     }
 
-    const previousTopicId = prevProps.match.params.topicId;
     const topicId = this.props.match.params.topicId;
+    const previousTopicId = prevProps.match.params.topicId;
     if (topicId !== previousTopicId) {
       this.props.findWidgetsForTopic(topicId);
     }
@@ -88,6 +89,7 @@ const propertyToDispatchMapper = (dispatch) => ({
       .then(topics => dispatch({
         type: "FIND_TOPICS_FOR_LESSON",
         topics, topics,
+        lessonId
       })),
   findLessonsForModule: moduleId => {
     lessonService.findLessonsForModule(moduleId)

@@ -13,9 +13,9 @@ const LessonTabs = (
     moduleId,
     updateLesson,
   }) =>
-  <div>
-    <h2>Lessons ({lessons.length})</h2>
-    <ul className="list-group list-group-horizontal">
+  <div className="card">
+    <ul className="list-group-flush">
+      <h2>Lessons ({lessons.length})</h2>
       {
         lessons.map(lesson =>
           <li className="list-group-item" key={lesson._id}>
@@ -48,7 +48,7 @@ const LessonTabs = (
           </li>
         )
       }
-      <button className="btn btn-success mr-1" onClick={() =>
+      <button className="btn btn-success" onClick={() =>
         createLessonForModule(moduleId)}>
         Create
     </button>

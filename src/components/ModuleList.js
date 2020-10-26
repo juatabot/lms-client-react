@@ -58,7 +58,7 @@ const ModuleList = (
           </li>)
       }
     </ul>
-    <button className="btn btn-success mr-1" onClick={() => createModule(course, { title: "New Module" })}>
+    <button className="btn btn-success" onClick={() => createModule(course, { title: "New Module" })}>
       Create Module
     </button>
   </div>
