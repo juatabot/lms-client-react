@@ -53,7 +53,7 @@ const dispatchToPropertyMapper = (dispatch) => ({
   createWidgetForTopic: (topicId) =>
     widgetService.createWidgetForTopic(topicId, {
       name: "NEW WIDGET",
-      type: "PARAGRAPH",
+      type: "HEADING",
     }).then(widget => dispatch({
       type: "CREATE_WIDGET_FOR_TOPIC",
       widget,
