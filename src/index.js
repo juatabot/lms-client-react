@@ -2,27 +2,29 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import "bootstrap/dist/css/bootstrap.min.css"
 import * as serviceWorker from './serviceWorker';
-import {CourseManager} from "./components/CourseManager";
-import {combineReducers, createStore} from "redux";
-import {Provider} from "react-redux";
+import { CourseManager } from "./components/CourseManager";
+import { combineReducers, createStore } from "redux";
+import { Provider } from "react-redux";
 import moduleReducer from "./reducers/modulesReducer";
 import courseReducer from "./reducers/courseReducer";
-import {lessonReducer} from "./reducers/lessonReducer";
-import {topicReducer} from "./reducers/topicReducer";
+import { lessonReducer } from "./reducers/lessonReducer";
+import { topicReducer } from "./reducers/topicReducer";
+import widgetReducer from "./reducers/widgetReducer";
 
 
 const rootReducer = combineReducers({
   moduleReducer,
   courseReducer,
   lessonReducer,
-  topicReducer
+  topicReducer,
+  widgetReducer
 })
 
 const store = createStore(rootReducer)
 
 ReactDOM.render(
   <Provider store={store}>
-    <CourseManager/>
+    <CourseManager />
   </Provider>,
   document.getElementById('root')
 );
