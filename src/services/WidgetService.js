@@ -1,4 +1,5 @@
 const topicsUrl = "http://localhost:8080/api/topics"
+const widgetsUrl = "http://localhost:8080/api/widgets"
 
 export const findWidgetsForTopic = (topicId) =>
   fetch(`${topicsUrl}/${topicId}/widgets`)
@@ -18,6 +19,11 @@ export const createWidgetForTopic = (topicId, widget) =>
     })
     .then(response => response.json())
 
+export const deleteWidget = (widgetId) =>
+  fetch(`${widgetsUrl}/${widgetId}`, {
+    method: "DELETE"
+  }).then(response => console.log(widgetId)); 
+
 export default {
-  findWidgetsForTopic, createWidgetForTopic
+  findWidgetsForTopic, createWidgetForTopic, deleteWidget
 }

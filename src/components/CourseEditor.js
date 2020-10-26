@@ -7,7 +7,6 @@ import LessonTabs from "./LessonTabs";
 import TopicTabs from "./TopicTabs";
 import { connect } from "react-redux";
 import topicService from "../services/TopicService";
-import TopicPills from "./TopicPills";
 import { findWidgetsForTopic } from "../services/WidgetService"
 import WidgetList from "./WidgetList";
 
