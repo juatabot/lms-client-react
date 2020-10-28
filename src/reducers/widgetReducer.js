@@ -2,7 +2,8 @@ const initialState = {
   widgets: [],
   widget: {},
   selectType: "HEADING",
-  preview: false
+  preview: false,
+  heading: "h1"
 }
 
 const widgetReducer = (state = initialState, action) => {
@@ -53,6 +54,11 @@ const widgetReducer = (state = initialState, action) => {
             .map(widget =>
               widget.id === action.widget.id ?
                 action.widget : widget)
+      }
+    case "SELECT_HEADING":
+      return {
+        ...state,
+        heading: action.heading
       }
     default:
       return state
