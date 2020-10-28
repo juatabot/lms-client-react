@@ -40,7 +40,7 @@ const TopicTabs = (
                                     Ok
                                 </button>
                                 <input
-                                    onChange={(e) => ({ ...topic, title: e.target.value })}
+                                    onChange={(e) => updateTopic({ ...topic, title: e.target.value })}
                                     value={topic.title} />
                             </span>
                         }
@@ -76,7 +76,7 @@ const dispatchToPropertyMapper = (dispatch) => ({
                 type: "DELETE_TOPIC",
                 topicId
             })),
-    updateTopic: (topic) => 
+    updateTopic: (topic) =>
         topicService.updateTopic(topic)
             .then(status => dispatch({
                 type: "UPDATE_TOPIC",

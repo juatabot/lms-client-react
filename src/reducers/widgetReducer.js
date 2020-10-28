@@ -30,6 +30,24 @@ const widgetReducer = (state = initialState, action) => {
         ...state,
         selectType: state.selectType === "HEADING" ? "PARAGRAPH" : "HEADING"
       }
+    case "EDIT_WIDGET":
+      return {
+        ...state,
+        widgets:
+          state.widgets
+            .map(widget =>
+              widget.id === action.widget.id ?
+                action.widget : widget)
+      }
+    case "UPDATE_WIDGET":
+      return {
+        ...state,
+        widgets:
+          state.widgets
+            .map(widget =>
+              widget.id === action.widget.id ?
+                action.widget : widget)
+      }
     default:
       return state
   }

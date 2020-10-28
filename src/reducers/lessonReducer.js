@@ -8,11 +8,11 @@ export const lessonReducer = (state = initialState, action) => {
     case "UPDATE_LESSON":
       return {
         ...state,
-        lessons: state
-          .lessons
-          .map(lesson =>
-            lesson._id === action.lesson._id ?
-              action.lesson : lesson)
+        lessons:
+          state.lessons
+            .map(lesson =>
+              lesson._id === action.lesson._id ?
+                action.lesson : lesson)
       }
     case "CREATE_LESSON":
       return {

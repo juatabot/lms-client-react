@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import TopicService from "../services/TopicService";
-import widgetService from "../services/WidgetService"
+import widgetService, { updateWidget } from "../services/WidgetService"
 import HeadingWidget from "./HeadingWidget";
 import ParagraphWidget from "./ParagraphWidget";
 
@@ -13,10 +13,15 @@ const WidgetList = (
     deleteWidget,
     changeSelect,
     selectType,
+    updateWidget,
   }) =>
   <div className="card">
     <ul className="list-group-flush">
       <h2>Widgets ({widgets.length})</h2>
+      <button className="btn btn-success" onClick={
+        () => widgets.forEach(widget => updateWidget(widget))}>
+        Save
+    </button>
       {
         widgets.map(widget =>
           <li className="list-group-item" key={widget.id}>
@@ -71,6 +76,12 @@ const dispatchToPropertyMapper = (dispatch) => ({
     dispatch({
       type: "CHANGE_SELECT",
     }),
+  updateWidget: (widget) =>
+    widgetService.updateWidget(widget)
+      .then(status => dispatch({
+        type: "UPDATE_WIDGET",
+        widget,
+      })),
 })
 
 export default connect

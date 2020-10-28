@@ -1,8 +1,16 @@
 import React from "react";
+import { connect } from "react-redux";
+import widgetService from "../services/WidgetService"
 
-const HeadingWidget = ({ widget }) =>
+
+const HeadingWidget = ({ widget, editWidget }) =>
   <div class="input-group">
-    <input id="input-area" type="text" class="form-control" aria-label="Text input with dropdown button" />
+    <input
+      id="input-area"
+      type="text"
+      class="form-control"
+      value={widget.src}
+      onChange={(e) => editWidget({ ...widget, src: e.target.value })} />
     <div class="input-group-append">
       <select className="btn">
         <option>Heading 1</option>
@@ -13,4 +21,14 @@ const HeadingWidget = ({ widget }) =>
     </div>
   </div>
 
-export default HeadingWidget
+const dispatchToPropertyMapper = (dispatch) => ({
+  editWidget: (widget) =>
+    dispatch({
+      type: "EDIT_WIDGET",
+      widget
+    })
+})
+
+export default connect
+  (null, dispatchToPropertyMapper)
+  (HeadingWidget)
