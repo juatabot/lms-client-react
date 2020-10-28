@@ -1,6 +1,7 @@
 const initialState = {
   widgets: [],
-  widget: {}
+  widget: {},
+  selectType: "HEADING"
 }
 
 const widgetReducer = (state = initialState, action) => {
@@ -23,6 +24,11 @@ const widgetReducer = (state = initialState, action) => {
       return {
         ...state,
         widgets: state.widgets.filter(widget => widget.id !== action.widgetId)
+      }
+    case "CHANGE_SELECT":
+      return {
+        ...state,
+        selectType: state.selectType === "HEADING" ? "PARAGRAPH" : "HEADING"
       }
     default:
       return state

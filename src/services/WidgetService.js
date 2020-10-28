@@ -22,7 +22,7 @@ export const createWidgetForTopic = (topicId, widget) =>
 export const deleteWidget = (widgetId) =>
   fetch(`${widgetsUrl}/${widgetId}`, {
     method: "DELETE"
-  }).then(response => console.log(widgetId)); 
+  }).then(response => console.log("Deleting widget " + widgetId));
 
 export default {
   findWidgetsForTopic, createWidgetForTopic, deleteWidget

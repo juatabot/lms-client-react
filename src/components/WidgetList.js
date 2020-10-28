@@ -11,6 +11,8 @@ const WidgetList = (
     topicId,
     createWidgetForTopic,
     deleteWidget,
+    changeSelect,
+    selectType,
   }) =>
   <div className="card">
     <ul className="list-group-flush">
@@ -32,12 +34,12 @@ const WidgetList = (
           </li>
         )
       }
-      <select className="btn" defaultValue="heading">
+      <select className="btn" defaultValue="heading" onClick={() => changeSelect()}>
         <option value="paragraph">Paragraph</option>
         <option value="heading">Heading</option>
       </select>
       <button className="btn btn-success" onClick={
-        () => createWidgetForTopic(topicId)}>
+        () => createWidgetForTopic(topicId, selectType)}>
         Create
     </button>
     </ul>
@@ -47,13 +49,14 @@ const stateToPropMapper = (state) => ({
   widgets: state.widgetReducer.widgets,
   topicId: state.widgetReducer.topicId,
   widgetType: state.widgetReducer.widgetType,
+  selectType: state.widgetReducer.selectType,
 })
 
 const dispatchToPropertyMapper = (dispatch) => ({
-  createWidgetForTopic: (topicId) =>
+  createWidgetForTopic: (topicId, selectType) =>
     widgetService.createWidgetForTopic(topicId, {
       name: "NEW WIDGET",
-      type: "HEADING",
+      type: selectType,
     }).then(widget => dispatch({
       type: "CREATE_WIDGET_FOR_TOPIC",
       widget,
@@ -64,6 +67,10 @@ const dispatchToPropertyMapper = (dispatch) => ({
         type: "DELETE_WIDGET",
         widgetId,
       })),
+  changeSelect: () =>
+    dispatch({
+      type: "CHANGE_SELECT",
+    }),
 })
 
 export default connect
