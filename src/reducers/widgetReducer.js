@@ -1,7 +1,8 @@
 const initialState = {
   widgets: [],
   widget: {},
-  selectType: "HEADING"
+  selectType: "HEADING",
+  preview: false
 }
 
 const widgetReducer = (state = initialState, action) => {
@@ -29,6 +30,11 @@ const widgetReducer = (state = initialState, action) => {
       return {
         ...state,
         selectType: state.selectType === "HEADING" ? "PARAGRAPH" : "HEADING"
+      }
+    case "CHANGE_PREVIEW":
+      return {
+        ...state,
+        preview: !state.preview
       }
     case "EDIT_WIDGET":
       return {

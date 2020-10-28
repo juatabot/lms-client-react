@@ -14,27 +14,43 @@ const WidgetList = (
     changeSelect,
     selectType,
     updateWidget,
+    changePreview,
+    preview,
   }) =>
   <div className="card">
     <ul className="list-group-flush">
       <h2>Widgets ({widgets.length})</h2>
-      <button className="btn btn-success" onClick={
-        () => widgets.forEach(widget => updateWidget(widget))}>
-        Save
-    </button>
+      <form>
+        <div className="form-row">
+          <div className="col">
+            <button className="btn btn-success" onClick={
+              () => widgets.forEach(widget => updateWidget(widget))}>
+              Save
+            </button>
+          </div>
+          <div className="col">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" onChange={() => changePreview()} />
+                Preview
+            </div>
+          </div>
+        </div>
+      </form>
+
       {
         widgets.map(widget =>
+
           <li className="list-group-item" key={widget.id}>
-            <button className="btn btn-danger mr-1" onClick={() => deleteWidget(widget.id)}>
+            {!preview && <button className="btn btn-danger mr-1" onClick={() => deleteWidget(widget.id)}>
               Delete
-            </button>
+              </button>}
             {
               widget.type === "HEADING" &&
-              <HeadingWidget widget={widget} />
+              <HeadingWidget widget={widget} preview={preview} />
             }
             {
               widget.type === "PARAGRAPH" &&
-              <ParagraphWidget widget={widget} />
+              <ParagraphWidget widget={widget} preview={preview} />
             }
           </li>
         )
@@ -55,6 +71,7 @@ const stateToPropMapper = (state) => ({
   topicId: state.widgetReducer.topicId,
   widgetType: state.widgetReducer.widgetType,
   selectType: state.widgetReducer.selectType,
+  preview: state.widgetReducer.preview,
 })
 
 const dispatchToPropertyMapper = (dispatch) => ({
@@ -82,6 +99,10 @@ const dispatchToPropertyMapper = (dispatch) => ({
         type: "UPDATE_WIDGET",
         widget,
       })),
+  changePreview: () =>
+    dispatch({
+      type: "CHANGE_PREVIEW"
+    })
 })
 
 export default connect
