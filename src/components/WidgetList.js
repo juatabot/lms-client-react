@@ -16,6 +16,8 @@ const WidgetList = (
     updateWidget,
     changePreview,
     preview,
+    moveWidgetUp,
+    moveWidgetDown,
   }) =>
   <div className="card">
     <ul className="list-group-flush">
@@ -38,12 +40,26 @@ const WidgetList = (
       </form>
 
       {
-        widgets.map(widget =>
+        widgets.sort((a, b) => {
+          if (a.order < b.order) return 1;
+          if (a.order > b.order) return -1;
+          return 0;
+        }).map(widget =>
 
           <li className="list-group-item" key={widget.id}>
-            {!preview && <button className="btn btn-danger mr-1" onClick={() => deleteWidget(widget.id)}>
-              Delete
-              </button>}
+            {!preview &&
+              <div>
+
+                <button className="btn btn-danger mr-1" onClick={() => moveWidgetUp(widget)}>
+                  Up
+                </button>
+                <button className="btn btn-danger mr-1" onClick={() => moveWidgetDown(widget)}>
+                  Down
+                </button>
+                <button className="btn btn-danger mr-1" onClick={() => deleteWidget(widget.id)}>
+                  Delete
+                </button>
+              </div>}
             {
               widget.type === "HEADING" &&
               <HeadingWidget widget={widget} preview={preview} />
@@ -55,14 +71,17 @@ const WidgetList = (
           </li>
         )
       }
-      <select className="btn" defaultValue="heading" onClick={() => changeSelect()}>
-        <option value="paragraph">Paragraph</option>
-        <option value="heading">Heading</option>
-      </select>
-      <button className="btn btn-success" onClick={
-        () => createWidgetForTopic(topicId, selectType)}>
-        Create
-    </button>
+      {!preview &&
+        <div>
+          <select className="btn" defaultValue="heading" onClick={() => changeSelect()}>
+            <option value="paragraph">Paragraph</option>
+            <option value="heading">Heading</option>
+          </select>
+          <button className="btn btn-success" onClick={
+            () => createWidgetForTopic(topicId, selectType)}>
+            Create
+          </button>
+        </div>}
     </ul>
   </div>
 
@@ -102,7 +121,15 @@ const dispatchToPropertyMapper = (dispatch) => ({
   changePreview: () =>
     dispatch({
       type: "CHANGE_PREVIEW"
-    })
+    }),
+  moveWidgetDown: (widget) => {
+    widget.order = widget.order - 1;
+    widgetService.updateWidget(widget);
+  },
+  moveWidgetUp: (widget) => {
+    widget.order = widget.order + 1;
+    widgetService.updateWidget(widget);
+  },
 })
 
 export default connect
