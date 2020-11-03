@@ -40,22 +40,23 @@ const WidgetList = (
       </form>
 
       {
-        widgets.sort((a, b) => {
-          if (a.order < b.order) return 1;
-          if (a.order > b.order) return -1;
-          return 0;
-        }).map(widget =>
+        widgets.map(widget =>
 
           <li className="list-group-item" key={widget.id}>
             {!preview &&
               <div>
-
-                <button className="btn btn-danger mr-1" onClick={() => moveWidgetUp(widget)}>
-                  Up
-                </button>
-                <button className="btn btn-danger mr-1" onClick={() => moveWidgetDown(widget)}>
-                  Down
-                </button>
+                {
+                  widgets.indexOf(widget) > 0 &&
+                  <button className="btn btn-danger mr-1" onClick={() => moveWidgetUp(widget)}>
+                    Up
+                  </button>
+                }
+                {
+                  widgets.indexOf(widget) < widgets.length - 1 &&
+                  <button className="btn btn-danger mr-1" onClick={() => moveWidgetDown(widget)}>
+                    Down
+                  </button>
+                }
                 <button className="btn btn-danger mr-1" onClick={() => deleteWidget(widget.id)}>
                   Delete
                 </button>
@@ -125,10 +126,16 @@ const dispatchToPropertyMapper = (dispatch) => ({
   moveWidgetDown: (widget) => {
     widget.order = widget.order - 1;
     widgetService.updateWidget(widget);
+    dispatch({
+      type: "REODER_WIDGETS"
+    })
   },
   moveWidgetUp: (widget) => {
     widget.order = widget.order + 1;
     widgetService.updateWidget(widget);
+    dispatch({
+      type: "REODER_WIDGETS"
+    })
   },
 })
 

@@ -60,6 +60,15 @@ const widgetReducer = (state = initialState, action) => {
         ...state,
         heading: action.heading
       }
+    case "REODER_WIDGETS":
+      return {
+        ...state,
+        widgets: [...state.widgets.sort((a, b) => {
+          if (a.order < b.order) return 1;
+          if (a.order > b.order) return -1;
+          return 0;
+        })]
+      }
     default:
       return state
   }
