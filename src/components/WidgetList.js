@@ -47,13 +47,13 @@ const WidgetList = (
               <div>
                 {
                   widgets.indexOf(widget) > 0 &&
-                  <button className="btn btn-danger mr-1" onClick={() => moveWidgetUp(widget)}>
+                  <button className="btn btn-danger mr-1" onClick={() => moveWidgetUp(widgets, widget)}>
                     Up
                   </button>
                 }
                 {
                   widgets.indexOf(widget) < widgets.length - 1 &&
-                  <button className="btn btn-danger mr-1" onClick={() => moveWidgetDown(widget)}>
+                  <button className="btn btn-danger mr-1" onClick={() => moveWidgetDown(widgets, widget)}>
                     Down
                   </button>
                 }
@@ -94,6 +94,12 @@ const stateToPropMapper = (state) => ({
   preview: state.widgetReducer.preview,
 })
 
+var swapArrayElements = function (arr, indexA, indexB) {
+  var temp = arr[indexA];
+  arr[indexA] = arr[indexB];
+  arr[indexB] = temp;
+}
+
 const dispatchToPropertyMapper = (dispatch) => ({
   createWidgetForTopic: (topicId, selectType) =>
     widgetService.createWidgetForTopic(topicId, {
@@ -123,18 +129,22 @@ const dispatchToPropertyMapper = (dispatch) => ({
     dispatch({
       type: "CHANGE_PREVIEW"
     }),
-  moveWidgetDown: (widget) => {
-    widget.order = widget.order - 1;
+  moveWidgetDown: (widgets, widget) => {
+    swapArrayElements(widgets, widget.order, widget.order + 1);
+    widgets.forEach((widget, idx) => widget.order = idx);
     widgetService.updateWidget(widget);
     dispatch({
-      type: "REODER_WIDGETS"
+      type: "REODER_WIDGETS",
+      widgets,
     })
   },
-  moveWidgetUp: (widget) => {
-    widget.order = widget.order + 1;
+  moveWidgetUp: (widgets, widget) => {
+    swapArrayElements(widgets, widget.order, widget.order - 1);
+    widgets.forEach((widget, idx) => widget.order = idx);
     widgetService.updateWidget(widget);
     dispatch({
-      type: "REODER_WIDGETS"
+      type: "REODER_WIDGETS",
+      widgets,
     })
   },
 })
