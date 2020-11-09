@@ -20,6 +20,7 @@ const WidgetList = (
     preview,
     moveWidgetUp,
     moveWidgetDown,
+    updateAllWidgets
   }) =>
   <div className="card">
     <ul className="list-group-flush">
@@ -28,8 +29,8 @@ const WidgetList = (
         <div className="form-row">
           <div className="col">
             <button className="btn btn-success" onClick={
-              () => widgets.forEach(widget => updateWidget(widget))}>
-              Save
+              () => widgets.forEach(widget => updateAllWidgets(widgets))}>
+              Save All
             </button>
           </div>
           <div className="col">
@@ -130,7 +131,6 @@ const dispatchToPropertyMapper = (dispatch) => ({
       })),
   changeSelect: (selected) => {
     let selectType = selected.toUpperCase();
-    console.log(selectType);
     dispatch({
       type: "CHANGE_SELECT",
       selectType,
@@ -139,7 +139,7 @@ const dispatchToPropertyMapper = (dispatch) => ({
 
   updateWidget: (widget) => {
     widgetService.updateWidget(widget)
-      .then(status => dispatch({
+      .then(dispatch({
         type: "UPDATE_WIDGET",
         widget,
       }))
@@ -166,6 +166,9 @@ const dispatchToPropertyMapper = (dispatch) => ({
       widgets,
     })
   },
+  updateAllWidgets: (widgets) => {
+    widgets.forEach(widget => updateWidget(widget))
+  }
 })
 
 export default connect
