@@ -4,6 +4,8 @@ import TopicService from "../services/TopicService";
 import widgetService, { updateWidget } from "../services/WidgetService"
 import HeadingWidget from "./HeadingWidget";
 import ParagraphWidget from "./ParagraphWidget";
+import ListWidget from "./ListWidget";
+import ImageWidget from "./ImageWidget";
 
 const WidgetList = (
   {
@@ -32,7 +34,7 @@ const WidgetList = (
           </div>
           <div className="col">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" onChange={() => changePreview()} />
+              <input class="form-check-input" type="checkbox" id="defaultCheck1" onChange={() => changePreview()} />
                 Preview
             </div>
           </div>
@@ -62,21 +64,31 @@ const WidgetList = (
                 </button>
               </div>}
             {
-              widget.type === "HEADING" &&
+              widget.widget_type === "HEADING" &&
               <HeadingWidget widget={widget} preview={preview} />
             }
             {
-              widget.type === "PARAGRAPH" &&
+              widget.widget_type === "PARAGRAPH" &&
               <ParagraphWidget widget={widget} preview={preview} />
+            }
+            {
+              widget.widget_type === "LIST" &&
+              <ListWidget widget={widget} preview={preview}></ListWidget>
+            }
+            {
+              widget.widget_type === "IMAGE" &&
+              <ImageWidget widget={widget} preview={preview}></ImageWidget>
             }
           </li>
         )
       }
       {!preview &&
         <div>
-          <select className="btn" defaultValue="heading" onClick={() => changeSelect()}>
+          <select className="btn" defaultValue="heading" onClick={(e) => changeSelect(e.target.value)}>
             <option value="paragraph">Paragraph</option>
             <option value="heading">Heading</option>
+            <option value="list">List</option>
+            <option value="image">Image</option>
           </select>
           <button className="btn btn-success" onClick={
             () => createWidgetForTopic(topicId, selectType)}>
@@ -104,7 +116,8 @@ const dispatchToPropertyMapper = (dispatch) => ({
   createWidgetForTopic: (topicId, selectType) =>
     widgetService.createWidgetForTopic(topicId, {
       name: "NEW WIDGET",
-      type: selectType,
+      widget_type: selectType,
+      widget_order: 0,
     }).then(widget => dispatch({
       type: "CREATE_WIDGET_FOR_TOPIC",
       widget,
@@ -115,16 +128,22 @@ const dispatchToPropertyMapper = (dispatch) => ({
         type: "DELETE_WIDGET",
         widgetId,
       })),
-  changeSelect: () =>
+  changeSelect: (selected) => {
+    let selectType = selected.toUpperCase();
+    console.log(selectType);
     dispatch({
       type: "CHANGE_SELECT",
-    }),
-  updateWidget: (widget) =>
+      selectType,
+    })
+  },
+
+  updateWidget: (widget) => {
     widgetService.updateWidget(widget)
       .then(status => dispatch({
         type: "UPDATE_WIDGET",
         widget,
-      })),
+      }))
+  },
   changePreview: () =>
     dispatch({
       type: "CHANGE_PREVIEW"

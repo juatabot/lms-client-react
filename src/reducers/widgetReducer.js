@@ -3,7 +3,8 @@ const initialState = {
   widget: {},
   selectType: "HEADING",
   preview: false,
-  heading: "h1"
+  heading: "h1",
+  list_type: "UNORDERED"
 }
 
 const widgetReducer = (state = initialState, action) => {
@@ -30,7 +31,7 @@ const widgetReducer = (state = initialState, action) => {
     case "CHANGE_SELECT":
       return {
         ...state,
-        selectType: state.selectType === "HEADING" ? "PARAGRAPH" : "HEADING"
+        selectType: action.selectType
       }
     case "CHANGE_PREVIEW":
       return {
@@ -59,6 +60,11 @@ const widgetReducer = (state = initialState, action) => {
       return {
         ...state,
         heading: action.heading
+      }
+    case "CHANGE_LIST_TYPE":
+      return {
+        ...state,
+        list_type: action.list_type
       }
     case "REODER_WIDGETS":
       return {
